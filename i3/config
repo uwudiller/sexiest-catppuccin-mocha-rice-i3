@@ -1,0 +1,143 @@
+# ============================================================
+# SIMPLE I3 CONFIG - CATPPUCCIN MOCHA
+# ============================================================
+
+set $mod Mod4
+set $term kitty
+set $menu rofi -show drun
+
+# ============================================================
+# COLORS
+# ============================================================
+
+set $mauve     #cba6f7
+set $red       #f38ba8
+set $text      #cdd6f4
+set $subtext0  #a6adc8
+set $surface0  #313244
+set $surface1  #45475a
+set $base      #1e1e2e
+set $crust     #11111b
+set $overlay1  #7f849c
+
+# ============================================================
+# FONT
+# ============================================================
+
+font pango:JetBrainsMono Nerd Font 14
+
+# ============================================================
+# STARTUP (ANIMATIONS ENABLED)
+# ============================================================
+
+exec --no-startup-id picom --config ~/.config/picom/picom.conf
+exec --no-startup-id feh --bg-fill ~/wallpapers/default.png
+exec --no-startup-id xrandr --output DP-0 --mode 1920x1080 --rate 240
+
+# ============================================================
+# GAPS & BORDERS
+# ============================================================
+
+gaps inner 10
+gaps outer 8
+default_border pixel 3
+
+# ============================================================
+# WINDOW COLORS
+# ============================================================
+
+client.focused          $mauve    $base    $text       $mauve    $mauve
+client.focused_inactive $surface1 $surface0 $subtext0   $surface1 $surface1
+client.unfocused        $surface0 $base    $overlay1   $surface0 $surface0
+client.urgent           $red      $red     $base       $red      $red
+client.background       $base
+
+# ============================================================
+# KEYBINDS
+# ============================================================
+
+bindsym $mod+Return exec $term
+bindsym $mod+d exec $menu
+bindsym $mod+q kill
+
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+bindsym $mod+b split h
+bindsym $mod+v split v
+bindsym $mod+f fullscreen toggle
+
+# ============================================================
+# WORKSPACES
+# ============================================================
+
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+# ============================================================
+# RESIZE MODE
+# ============================================================
+
+mode "resize" {
+    bindsym h resize shrink width 10 px
+    bindsym j resize grow height 10 px
+    bindsym k resize shrink height 10 px
+    bindsym l resize grow width 10 px
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# ============================================================
+# RELOAD / EXIT
+# ============================================================
+
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+e exec i3-nagbar -t warning -m "Exit?" -b "Yes" "i3-msg exit"
+
+# ============================================================
+# BAR
+# ============================================================
+
+bar {
+    position top
+    font pango:JetBrainsMono Nerd Font 14
+    status_command i3status
+    workspace_buttons yes
+    colors {
+        background $crust
+        statusline $text
+        separator $surface1
+        focused_workspace $mauve $mauve $crust
+        active_workspace $surface1 $surface1 $text
+        inactive_workspace $base $base $overlay1
+        urgent_workspace $red $red $crust
+    }
+}
