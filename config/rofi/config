@@ -1,0 +1,2 @@
+terminal: /usr/bin/kitty
+run-shell-command: /usr/bin/kitty -e {cmd}
